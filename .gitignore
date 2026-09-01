@@ -1,2 +1,6 @@
 node_modules/
 .DS_Store
+
+# Drop zone for incoming assets — keep the folder, ignore what lands in it
+file_intake/*
+!file_intake/.gitkeep

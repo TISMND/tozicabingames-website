@@ -14,11 +14,7 @@
      which turns on the dark scrim and the label backdrop that keep the type readable. */
   --art-syntherion: url("img/syntherion-hero.webp");
 
-  /* Placeholder for Assimilarium until real key art exists. */
-  --art-assimilarium:
-    radial-gradient(120% 90% at 70% 20%, #123a35 0%, transparent 60%),
-    radial-gradient(100% 80% at 25% 80%, #0f2b33 0%, transparent 65%),
-    linear-gradient(200deg, #0d1414 0%, #0b0b0d 100%);
+  --art-assimilarium: url("img/assimilarium-hero.webp");
 }
 
 * { box-sizing: border-box; }
@@ -34,7 +30,7 @@ html, body {
 }
 
 body {
-  position: relative; /* anchors the wordmark and the swipe dots */
+  position: relative; /* anchors the wordmark */
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -115,7 +111,11 @@ body {
      the right edge of the panel and leaves open starfield and nebula on the left. */
   background-position: 66% center;
 }
-.panel--assimilarium .panel__art { background-image: var(--art-assimilarium); }
+.panel--assimilarium .panel__art {
+  background-image: var(--art-assimilarium);
+  /* the mothership and the lit network sit dead centre, so don't bias the crop */
+  background-position: center;
+}
 
 .panel__label {
   position: relative;
@@ -144,31 +144,6 @@ body {
   text-transform: uppercase;
   color: var(--ink-dim);
 }
-
-/* ---------- swipe indicator (mobile only) ---------- */
-
-.dots {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  display: none;
-  justify-content: center;
-  gap: 0.5rem;
-  pointer-events: none;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--ink);
-  opacity: 0.25;
-  transition: opacity var(--dur) var(--ease);
-}
-
-.dot.is-active { opacity: 0.9; }
 
 /* ---------- scrim: hold the art back so the type stays readable ---------- */
 
@@ -277,64 +252,85 @@ body {
   .panel--has-art .panel__art::after { opacity: 0.55; }
 }
 
-/* ---------- mobile: swipe sideways, don't stack ----------
+/* ---------- mobile: two halves, two buttons ----------
 
-   A vertical stack would read as a ranked list. These are two peer games, so the
-   left/right relationship survives on phones as a horizontal snap-scroller: one
-   game per screen, with a sliver of the next one peeking in to advertise the swipe.
-   Whichever panel is nearest the centre of the screen takes the focused state — the
-   same state hover produces on desktop.                                          */
+   The carousel read as a gallery of many things rather than a choice between two,
+   and its peek left odd margins down both edges. Two stacked halves with explicit
+   buttons say "pick one" much more plainly. Syntherion's button is filled and
+   pressable; Assimilarium's is an outline that deliberately looks inert.          */
 
 @media (max-width: 700px) {
-  .panels {
-    flex-direction: row;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    padding-inline: 6vw; /* centres the first and last panel, leaving the peek */
-    scrollbar-width: none;
+  .panels { flex-direction: column; }
+
+  .panel { flex: 1 1 50%; }
+
+  /* the wordmark takes the centre line, so labels shift away from the seam */
+  .panel--syntherion .panel__label { transform: translateY(-1.5rem); }
+  .panel--assimilarium .panel__label { transform: translateY(1.5rem); }
+
+  .panel__title { font-size: clamp(1.35rem, 6.5vw, 1.9rem); }
+
+  /* the note becomes an actual button */
+  .panel__note {
+    display: inline-block;
+    margin-top: 0.4rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
+    text-shadow: none;
   }
 
-  .panels::-webkit-scrollbar { display: none; }
-
-  .panel {
-    flex: 0 0 88vw;
-    height: 100dvh;
-    scroll-snap-align: center;
+  /* filled = you can press this */
+  .panel--syntherion .panel__note {
+    background: var(--ink);
+    color: var(--bg);
   }
 
-  .panel__label { padding-top: 3rem; } /* clears the wordmark */
-
-  /* Without JS every label stays visible — the safe default. The resting/focused
-     split below only switches on once the script has run. */
-  .js .panel__title {
-    opacity: 0.45;
-    transition: opacity var(--dur) var(--ease);
+  /* outline = a button shape that is plainly not live */
+  .panel--assimilarium .panel__note {
+    background: rgba(11, 11, 13, 0.35);
+    border-color: rgba(232, 232, 234, 0.35);
+    color: rgba(232, 232, 234, 0.65);
   }
 
-  .js .panel__note {
-    opacity: 0;
-    transform: translateY(0.5rem);
-    transition:
-      opacity var(--dur) var(--ease),
-      transform var(--dur) var(--ease);
+  /* company name owns the middle of the screen, straddling the two halves */
+  .wordmark {
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 1.1rem 1rem;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(11, 11, 13, 0.82) 22%,
+      rgba(11, 11, 13, 0.82) 78%,
+      transparent
+    );
   }
 
-  .js .panel--has-art .panel__art::after { opacity: 0.68; }
-
-  .js .panel.is-focused .panel__title { opacity: 1; }
-
-  .js .panel.is-focused .panel__note {
-    opacity: 1;
-    transform: translateY(0);
+  .wordmark h1 {
+    font-size: clamp(1.05rem, 6vw, 1.5rem);
+    color: var(--ink);
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
   }
 
-  .js .panel--has-art.is-focused .panel__art::after { opacity: 0.42; }
-  .js .panel--has-art.is-focused .panel__art { transform: scale(1.08); }
+  /* Both halves are always on show here, so the scrim is set per panel rather than
+     by state. The Assimilarium art is a night-side Earth and far darker to begin
+     with — the same scrim that suits Syntherion crushes it to black. */
+  /* zoom past the neon grid strips running along the top and bottom of the source,
+     which otherwise collide with the wordmark band at the seam */
+  .panel--syntherion .panel__art { background-size: auto 138%; }
 
-  .dots { display: flex; }
+  .panel--syntherion .panel__art::after { opacity: 0.5; }
+  .panel--assimilarium .panel__art::after { opacity: 0.3; }
+
+  /* the wordmark band already separates the halves */
+  .panel + .panel::before { display: none; }
 }
-
 
 /* ---------- motion ---------- */
 
