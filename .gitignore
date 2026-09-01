@@ -4,3 +4,6 @@ node_modules/
 # Drop zone for incoming assets — keep the folder, ignore what lands in it
 file_intake/*
 !file_intake/.gitkeep
+
+# Internal notes — keep local, never publish (the repo and Pages root are public)
+tozicabingameswebsitebrief.md
