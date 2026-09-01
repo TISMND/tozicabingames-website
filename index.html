@@ -38,5 +38,57 @@
 
   </main>
 
+  <nav class="dots" aria-hidden="true">
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </nav>
+
+  <script>
+    // Progressive enhancement: only once this runs do the mobile panels rest dim
+    // and light up one at a time. Without it every label just stays visible.
+    document.documentElement.classList.add('js');
+
+    (function () {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+      var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+      var scroller = document.querySelector('.panels');
+      var queued = false;
+
+      function focusNearest() {
+        queued = false;
+        var middle = window.innerWidth / 2;
+        var winner = 0;
+        var best = Infinity;
+
+        panels.forEach(function (panel, i) {
+          var box = panel.getBoundingClientRect();
+          var distance = Math.abs(box.left + box.width / 2 - middle);
+          if (distance < best) {
+            best = distance;
+            winner = i;
+          }
+        });
+
+        panels.forEach(function (panel, i) {
+          panel.classList.toggle('is-focused', i === winner);
+        });
+        dots.forEach(function (dot, i) {
+          dot.classList.toggle('is-active', i === winner);
+        });
+      }
+
+      function schedule() {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(focusNearest);
+        }
+      }
+
+      scroller.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+      focusNearest();
+    })();
+  </script>
+
 </body>
 </html>

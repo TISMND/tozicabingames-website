@@ -34,6 +34,7 @@ html, body {
 }
 
 body {
+  position: relative; /* anchors the wordmark and the swipe dots */
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -144,6 +145,31 @@ body {
   color: var(--ink-dim);
 }
 
+/* ---------- swipe indicator (mobile only) ---------- */
+
+.dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: none;
+  justify-content: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.25;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.dot.is-active { opacity: 0.9; }
+
 /* ---------- scrim: hold the art back so the type stays readable ---------- */
 
 /* Dial the softness here. 0 turns the blur off entirely. */
@@ -245,28 +271,70 @@ body {
   outline-offset: -6px;
 }
 
-/* ---------- mobile: no hover to rely on, so show everything ---------- */
-
-@media (max-width: 700px) {
-  .panels { flex-direction: column; }
-
-  .panel { min-height: 50dvh; }
-
-  .panel + .panel::before {
-    top: 0; left: 0; right: 0; bottom: auto;
-    width: auto;
-    height: 1px;
-  }
-
-  .panel__label { padding-top: 3rem; } /* clears the wordmark on the top half */
-  .panel + .panel .panel__label { padding-top: 1rem; }
-}
-
 /* ---------- touch: no hover to brighten the art, so hold it back less ---------- */
 
 @media (hover: none) {
   .panel--has-art .panel__art::after { opacity: 0.55; }
 }
+
+/* ---------- mobile: swipe sideways, don't stack ----------
+
+   A vertical stack would read as a ranked list. These are two peer games, so the
+   left/right relationship survives on phones as a horizontal snap-scroller: one
+   game per screen, with a sliver of the next one peeking in to advertise the swipe.
+   Whichever panel is nearest the centre of the screen takes the focused state — the
+   same state hover produces on desktop.                                          */
+
+@media (max-width: 700px) {
+  .panels {
+    flex-direction: row;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-inline: 6vw; /* centres the first and last panel, leaving the peek */
+    scrollbar-width: none;
+  }
+
+  .panels::-webkit-scrollbar { display: none; }
+
+  .panel {
+    flex: 0 0 88vw;
+    height: 100dvh;
+    scroll-snap-align: center;
+  }
+
+  .panel__label { padding-top: 3rem; } /* clears the wordmark */
+
+  /* Without JS every label stays visible — the safe default. The resting/focused
+     split below only switches on once the script has run. */
+  .js .panel__title {
+    opacity: 0.45;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .js .panel__note {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .js .panel--has-art .panel__art::after { opacity: 0.68; }
+
+  .js .panel.is-focused .panel__title { opacity: 1; }
+
+  .js .panel.is-focused .panel__note {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .js .panel--has-art.is-focused .panel__art::after { opacity: 0.42; }
+  .js .panel--has-art.is-focused .panel__art { transform: scale(1.08); }
+
+  .dots { display: flex; }
+}
+
 
 /* ---------- motion ---------- */
 
