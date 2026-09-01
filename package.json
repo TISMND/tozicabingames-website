@@ -1,0 +1,12 @@
+{
+  "name": "tozicabingames-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "tozicabingames.com — static single page. No build step; the repo root is what GitHub Pages serves.",
+  "scripts": {
+    "dev": "browser-sync start --server --files \"*.html\" \"*.css\" \"img/*\" --no-notify --port 3000"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}

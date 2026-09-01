@@ -1,0 +1,277 @@
+/* TOZI CABIN GAMES — landing page
+   Neutral dark stage: the page stays quiet so each game's half carries its own colour. */
+
+:root {
+  --bg: #0b0b0d;
+  --ink: #e8e8ea;
+  --ink-dim: #6a6a70;
+  --rule: #1c1c20;
+
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur: 300ms;
+
+  /* Art. Panels with a real image also get the .panel--has-art class in the markup,
+     which turns on the dark scrim and the label backdrop that keep the type readable. */
+  --art-syntherion: url("img/syntherion-hero.webp");
+
+  /* Placeholder for Assimilarium until real key art exists. */
+  --art-assimilarium:
+    radial-gradient(120% 90% at 70% 20%, #123a35 0%, transparent 60%),
+    radial-gradient(100% 80% at 25% 80%, #0f2b33 0%, transparent 65%),
+    linear-gradient(200deg, #0d1414 0%, #0b0b0d 100%);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- wordmark ---------- */
+
+.wordmark {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 2;
+  padding: 1.75rem 1rem;
+  text-align: center;
+  pointer-events: none; /* never blocks a click on the panel underneath */
+}
+
+.wordmark h1 {
+  margin: 0;
+  font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* balances the trailing letterspace */
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color var(--dur) var(--ease);
+}
+
+/* ---------- panels ---------- */
+
+.panels {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  isolation: isolate;
+}
+
+.panel--syntherion { cursor: pointer; }
+.panel--assimilarium { cursor: default; }
+
+/* divider between the halves */
+.panel + .panel::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 1px;
+  background: var(--rule);
+  z-index: 3;
+}
+
+.panel__art {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  transition:
+    transform var(--dur) var(--ease),
+    opacity var(--dur) var(--ease),
+    filter var(--dur) var(--ease);
+}
+
+.panel--syntherion .panel__art {
+  background-image: var(--art-syntherion);
+  /* The source is 3840x1240 — roughly three times wider than a half-screen panel, so
+     only about a third of it is ever on screen. This lands the ringed planet against
+     the right edge of the panel and leaves open starfield and nebula on the left. */
+  background-position: 66% center;
+}
+.panel--assimilarium .panel__art { background-image: var(--art-assimilarium); }
+
+.panel__label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.panel__title {
+  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.panel__note {
+  font-size: clamp(0.65rem, 1.2vw, 0.78rem);
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* ---------- scrim: hold the art back so the type stays readable ---------- */
+
+/* Dial the softness here. 0 turns the blur off entirely. */
+.panel--has-art { --art-blur: 7px; }
+
+.panel--has-art .panel__art {
+  filter: blur(var(--art-blur));
+  /* Blur bleeds transparency in from the edges, so the art is overscaled to push
+     those soft edges outside the panel's overflow. */
+  transform: scale(1.06);
+}
+
+.panel--has-art .panel__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0.68; /* art is held back at rest; the blur does some of that work now */
+  transition: opacity var(--dur) var(--ease);
+}
+
+/* a soft pool of dark directly behind the label, so the words never sit on a star field */
+.panel--has-art .panel__label::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -5.5rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(11, 11, 13, 0.82), transparent);
+}
+
+.panel--has-art .panel__title,
+.panel--has-art .panel__note {
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.85);
+}
+
+/* the dim grey note reads fine on a dark panel but disappears on lit art */
+.panel--has-art .panel__note { color: rgba(232, 232, 234, 0.88); }
+
+/* ---------- hover: lift the one, dim the other ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+
+  /* at rest the note is hidden; the title sits low-key */
+  .panel__title {
+    opacity: 0.55;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .panel__note {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .panels:hover .panel:not(:hover) .panel__art {
+    opacity: 0.4;
+    filter: saturate(0.35);
+  }
+
+  /* filter is not additive, so the blur has to be restated wherever filter is set */
+  .panels:hover .panel--has-art:not(:hover) .panel__art {
+    filter: blur(var(--art-blur)) saturate(0.35);
+  }
+
+  .panels:hover .panel:not(:hover) .panel__title { opacity: 0.25; }
+
+  /* Over real art the resting title has to stay legible, so it sits far brighter
+     than it does over a flat gradient panel. */
+  .panel--has-art .panel__title { opacity: 0.9; }
+
+  .panel:hover .panel__art { transform: scale(1.02); }
+
+  /* The blur stays on through hover — it hides aliasing in the source art, and the
+     sharp version is what people meet on the next page anyway. Hover brightens and
+     pushes in rather than pulling into focus. */
+  .panel--has-art:hover .panel__art {
+    transform: scale(1.08);
+  }
+
+  .panel--has-art:hover .panel__art::after { opacity: 0.42; }
+  .panel:hover .panel__title { opacity: 1; }
+
+  .panel:hover .panel__note {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .panel--syntherion:focus-visible .panel__title,
+  .panel--syntherion:focus-visible .panel__note {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.panel--syntherion:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: -6px;
+}
+
+/* ---------- mobile: no hover to rely on, so show everything ---------- */
+
+@media (max-width: 700px) {
+  .panels { flex-direction: column; }
+
+  .panel { min-height: 50dvh; }
+
+  .panel + .panel::before {
+    top: 0; left: 0; right: 0; bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .panel__label { padding-top: 3rem; } /* clears the wordmark on the top half */
+  .panel + .panel .panel__label { padding-top: 1rem; }
+}
+
+/* ---------- touch: no hover to brighten the art, so hold it back less ---------- */
+
+@media (hover: none) {
+  .panel--has-art .panel__art::after { opacity: 0.55; }
+}
+
+/* ---------- motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel:hover .panel__art { transform: none; }
+  .panel__note { transform: none; }
+  * { transition-duration: 1ms !important; }
+}
