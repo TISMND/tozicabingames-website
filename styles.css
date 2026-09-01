@@ -50,11 +50,14 @@ body {
 
 .wordmark h1 {
   margin: 0;
-  font-size: clamp(0.7rem, 1.6vw, 0.85rem);
-  font-weight: 500;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em; /* balances the trailing letterspace */
-  text-transform: uppercase;
+  /* The studio is not one of the products. A serif in title case sorts it into a
+     different category before the eye compares sizes, and leans on the "cabin" in
+     the name. Same face at both breakpoints so the brand reads as one thing. */
+  font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-size: clamp(0.82rem, 1.9vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-indent: 0.16em; /* balances the trailing letterspace */
   color: var(--ink-dim);
   transition: color var(--dur) var(--ease);
 }
@@ -268,7 +271,15 @@ body {
   .panel--syntherion .panel__label { transform: translateY(-1.5rem); }
   .panel--assimilarium .panel__label { transform: translateY(1.5rem); }
 
-  .panel__title { font-size: clamp(1.35rem, 6.5vw, 1.9rem); }
+  /* The studio name leads and the games sit under it as labelled objects. Without
+     this the three lines share a size and weight and read as a list of three. */
+  .panel__title {
+    font-size: clamp(1.05rem, 4.9vw, 1.3rem);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: rgba(232, 232, 234, 0.82);
+  }
 
   /* the note becomes an actual button */
   .panel__note {
@@ -312,10 +323,10 @@ body {
   }
 
   .wordmark h1 {
-    font-size: clamp(1.05rem, 6vw, 1.5rem);
+    font-size: clamp(1.55rem, 7.6vw, 2.1rem);
     color: var(--ink);
-    letter-spacing: 0.3em;
-    text-indent: 0.3em;
+    letter-spacing: 0.04em;
+    text-indent: 0.04em;
   }
 
   /* Both halves are always on show here, so the scrim is set per panel rather than
