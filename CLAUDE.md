@@ -38,6 +38,14 @@ Image pipeline, since the repo and Pages root are both public and hero art is he
    This has been taking 1.5–2.5MB PNGs down to ~220KB.
 3. Point the matching `--art-*` custom property in `styles.css` at it.
 
+### Icons
+
+The cabin mark is black on transparent (`assets/source/cabin-mark.png`). It is inverted
+to white on the site's `#0b0b0d` and baked onto an opaque tile, because a black mark on
+transparent vanishes in a dark-mode tab strip, and iOS fills transparency with black
+anyway. Small sizes get less padding and a gamma lift on the mask — thin log strokes
+average to mid-grey when downscaled and otherwise read as a smudge at 16px.
+
 ## Layout
 
 Desktop is two full-height halves side by side. Hover brightens one and dims the other.
