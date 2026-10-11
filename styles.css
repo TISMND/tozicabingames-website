@@ -14,7 +14,7 @@
      which turns on the dark scrim and the label backdrop that keep the type readable. */
   --art-syntherion: url("img/syntherion-hero.webp");
 
-  --art-assimilarium: url("img/assimilarium-hero.webp");
+  --art-third-party: url("img/the-third-party-hero.webp");
 }
 
 * { box-sizing: border-box; }
@@ -83,7 +83,7 @@ body {
 }
 
 .panel--syntherion { cursor: pointer; }
-.panel--assimilarium { cursor: default; }
+.panel--third-party { cursor: default; }
 
 /* divider between the halves */
 .panel + .panel::before {
@@ -114,9 +114,11 @@ body {
      the right edge of the panel and leaves open starfield and nebula on the left. */
   background-position: 66% center;
 }
-.panel--assimilarium .panel__art {
-  background-image: var(--art-assimilarium);
-  /* the mothership and the lit network sit dead centre, so don't bias the crop */
+.panel--third-party .panel__art {
+  background-image: var(--art-third-party);
+  /* The in-game menu's MRI plate, baked to a still: the tint, highlight lift, feathered
+     plate edge and vignette all come from MenuBackground.js in the game. The head sits
+     dead centre with the parasite above the label, so don't bias the crop. */
   background-position: center;
 }
 
@@ -152,6 +154,8 @@ body {
 
 /* Dial the softness here. 0 turns the blur off entirely. */
 .panel--has-art { --art-blur: 7px; }
+/* the MRI has no aliasing to hide, and a full blur smears the parasite into a blot */
+.panel--third-party { --art-blur: 3px; }
 
 .panel--has-art .panel__art {
   filter: blur(var(--art-blur));
@@ -185,6 +189,16 @@ body {
 
 /* the dim grey note reads fine on a dark panel but disappears on lit art */
 .panel--has-art .panel__note { color: rgba(232, 232, 234, 0.88); }
+
+/* The scans are Wellcome Collection, CC BY 4.0, which requires visible attribution. */
+.panel__credit {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.7rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: rgba(232, 232, 234, 0.4);
+}
 
 /* ---------- hover: lift the one, dim the other ---------- */
 
@@ -260,7 +274,7 @@ body {
    The carousel read as a gallery of many things rather than a choice between two,
    and its peek left odd margins down both edges. Two stacked halves with explicit
    buttons say "pick one" much more plainly. Syntherion's button is filled and
-   pressable; Assimilarium's is an outline that deliberately looks inert.          */
+   pressable; The Third Party's is an outline that deliberately looks inert.          */
 
 @media (max-width: 700px) {
   .panels { flex-direction: column; }
@@ -269,7 +283,7 @@ body {
 
   /* the wordmark takes the centre line, so labels shift away from the seam */
   .panel--syntherion .panel__label { transform: translateY(-1.5rem); }
-  .panel--assimilarium .panel__label { transform: translateY(1.5rem); }
+  .panel--third-party .panel__label { transform: translateY(1.5rem); }
 
   /* The studio name leads and the games sit under it as labelled objects. Without
      this the three lines share a size and weight and read as a list of three. */
@@ -302,7 +316,7 @@ body {
   }
 
   /* outline = a button shape that is plainly not live */
-  .panel--assimilarium .panel__note {
+  .panel--third-party .panel__note {
     background: rgba(11, 11, 13, 0.35);
     border-color: rgba(232, 232, 234, 0.35);
     color: rgba(232, 232, 234, 0.65);
@@ -330,14 +344,15 @@ body {
   }
 
   /* Both halves are always on show here, so the scrim is set per panel rather than
-     by state. The Assimilarium art is a night-side Earth and far darker to begin
-     with — the same scrim that suits Syntherion crushes it to black. */
+     by state. The Third Party's MRI is a lit green head on black: a lighter scrim
+     than Syntherion's keeps the scan from going murky, but it still has to hold the
+     label off the bright tissue behind it. */
   /* zoom past the neon grid strips running along the top and bottom of the source,
      which otherwise collide with the wordmark band at the seam */
   .panel--syntherion .panel__art { background-size: auto 138%; }
 
   .panel--syntherion .panel__art::after { opacity: 0.5; }
-  .panel--assimilarium .panel__art::after { opacity: 0.3; }
+  .panel--third-party .panel__art::after { opacity: 0.42; }
 
   /* the wordmark band already separates the halves */
   .panel + .panel::before { display: none; }

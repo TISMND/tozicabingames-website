@@ -1,7 +1,8 @@
 # tozicabingames.com
 
 Landing page for Tozi Cabin Games. One static page, two games: Syntherion links out
-to syntheriongame.com, Assimilarium is "coming soon" with no link yet.
+to syntheriongame.com, The Third Party (formerly Assimilarium) is "coming soon" with no
+link yet.
 
 ## Deploying
 
@@ -66,8 +67,14 @@ Some decisions that look arbitrary but are not:
 - **The art is overscaled** (`1.06`) because blur bleeds transparency in from the edges.
 - **`filter` is not additive.** Any rule that sets `filter` must restate the blur, or
   that panel silently snaps into focus.
-- **Scrim is set per panel on mobile.** The Assimilarium art is a night-side Earth and
-  far darker than the Syntherion art; a shared value crushes one or washes out the other.
+- **Scrim is set per panel on mobile.** The two arts differ a lot in brightness; a
+  shared value crushes one or washes out the other.
+- **The Third Party art is the game's main menu, baked.** In-game it is a shader
+  (`assimilarium-mobile/app/MenuBackground.js`) tinting greyscale MRI plates green. Here
+  it is one still: `assets/source/bake-third-party.py` runs the same tint, highlight
+  lift, edge feather and vignette over `assets/source/the-third-party-scan.jpg`. The
+  scans are Wellcome Collection, CC BY 4.0, so the `.panel__credit` line is a licence
+  requirement, not decoration.
 - **The studio name is a serif in title case** at both breakpoints. It separates the
   studio from the products by kind rather than rank — without it the three lines read as
   a list of three peers. Keep it the same face on desktop and mobile.

@@ -1,7 +1,7 @@
 # tozicabingames-website
 
 Source for [tozicabingames.com](https://tozicabingames.com) — the landing page for
-Tozi Cabin Games, linking to Syntherion and Assimilarium.
+Tozi Cabin Games, linking to Syntherion and The Third Party.
 
 Static HTML and CSS, no build step. GitHub Pages serves the root of `main` directly.
 
