@@ -187,7 +187,10 @@ body {
    kit's title (assets/source/the-third-party-title.png). Syntherion's image carries its glow as margin, so it
    is set wider to bring the letters to the same width as the other. */
 .panel__title--art { display: block; height: auto; max-width: 90%; }
-.panel__title--syntherion { width: clamp(250px, 39vw, 640px); margin: -4% 0; }
+/* the solid letters are rows 139-221 of 1200 x 350, the glow the rest: the margin cancels it exactly, sized from the
+   image's own width (a % margin is the panel's), so both notes sit the label's 0.6rem under their letters */
+.panel__title--syntherion { --w: clamp(250px, 39vw, 640px); width: var(--w); max-width: none;
+  margin: calc(var(--w) * -139 / 1200) 0 calc(var(--w) * -129 / 1200); }
 .panel__title--third-party { width: clamp(180px, 27vw, 440px); }
 
 .panel__note {

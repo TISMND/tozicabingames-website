@@ -6,6 +6,12 @@ to syntheriongame.com, The Third Party (formerly Assimilarium) links to its own 
 The press kit is `thirdparty/press/`, unlisted and `noindex`; its source is the game repo's
 `docs/press/thirdparty-kit/`.
 
+**Heavy media lives on R2, not here** (2026-10-14): the kit's trailer, loops and zip are in the
+studio's Cloudflare R2 bucket (the one `syntherion-website/scripts/upload-r2.js` writes to, its
+`.env`), under `thirdparty/`, served from
+`https://pub-e52e55062eab45daaa777a6bec1f03ca.r2.dev/thirdparty/<name>`. Video, GIFs and zips go
+there; stills and art stay in the repo.
+
 ## Deploying
 
 GitHub Pages serves the root of `main` as-is. There is **no build step** — push and it
