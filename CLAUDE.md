@@ -71,15 +71,19 @@ Some decisions that look arbitrary but are not:
   that panel silently snaps into focus.
 - **Scrim is set per panel on mobile.** The two arts differ a lot in brightness; a
   shared value crushes one or washes out the other.
-- **The Third Party art is the game's main menu, baked.** In-game it is a shader
-  (`assimilarium-mobile/app/MenuBackground.js`) tinting greyscale MRI plates green. Here
-  it is one still: `assets/source/bake-third-party.py` runs the same tint, highlight
-  lift, edge feather and vignette over `assets/source/the-third-party-scan.jpg`. The
-  scans are Wellcome Collection, CC BY 4.0, so the `.panel__credit` line is a licence
-  requirement, not decoration.
-- **The studio name is a serif in title case** at both breakpoints. It separates the
-  studio from the products by kind rather than rank — without it the three lines read as
-  a list of three peers. Keep it the same face on desktop and mobile.
+- **The Third Party art is the app icon's three busts** (2026-10-14), the game's key art from its press kit
+  (`assets/source/the-third-party-busts.jpg`), zoomed and anchored low so the green one's eyes sit above the
+  title; no blur. It replaced the baked MRI menu (`bake-third-party.py` and the scan stay in `assets/source/`);
+  if the MRI ever returns, so must its Wellcome Collection CC BY 4.0 credit line (`.panel__credit`).
+- **Each game's title is its own lettering, as an image**: Syntherion's is its menu's neon logo shot from the
+  game's build (`assets/source/syntherion-title.png`, the full title screen beside it), The Third Party's the
+  press kit's title. Their widths are set so the letters match; the alt text carries the names.
+- **The studio is its logo's lockup** (2026-10-14): the trail-patch circle beside TOZI / CABIN GAMES in the
+  logo's own faces (Bebas Neue, Public Sans; self-hosted in `fonts/`), in a dark pill. It sits centred on the
+  line between the two games at both breakpoints -- at the top on desktop, straddling the seam on a phone -- so
+  it belongs to neither. A big circle on the desktop seam fought the titles; the name alone on a phone sat on
+  The Third Party's poster and read as that game's. The logo and its exports live in assimilarium-mobile
+  (`docs/tozi-cabin-games/`).
 - The page currently ships **zero JavaScript**. Worth preserving if you can.
 
 ## Verification gotcha
