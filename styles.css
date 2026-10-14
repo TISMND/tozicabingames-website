@@ -142,6 +142,14 @@ body {
   color: var(--ink);
 }
 
+/* The games' own titles, as images [TIM 2026-10-14]: Syntherion's is its menu's neon logo shot from the game
+   (scanlines and glow baked in, transparent; assets/source/syntherion-title.png), The Third Party's the press
+   kit's title (assets/source/the-third-party-title.png). Syntherion's image carries its glow as margin, so it
+   is set wider to bring the letters to the same width as the other. */
+.panel__title--art { display: block; height: auto; max-width: 90%; }
+.panel__title--syntherion { width: clamp(220px, 34vw, 560px); margin: -4% 0; }
+.panel__title--third-party { width: clamp(180px, 27vw, 440px); }
+
 .panel__note {
   font-size: clamp(0.65rem, 1.2vw, 0.78rem);
   font-weight: 400;
