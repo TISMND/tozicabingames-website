@@ -147,7 +147,7 @@ body {
    kit's title (assets/source/the-third-party-title.png). Syntherion's image carries its glow as margin, so it
    is set wider to bring the letters to the same width as the other. */
 .panel__title--art { display: block; height: auto; max-width: 90%; }
-.panel__title--syntherion { width: clamp(220px, 34vw, 560px); margin: -4% 0; }
+.panel__title--syntherion { width: clamp(250px, 39vw, 640px); margin: -4% 0; }
 .panel__title--third-party { width: clamp(180px, 27vw, 440px); }
 
 .panel__note {
