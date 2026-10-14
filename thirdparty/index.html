@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Third Party — Press Kit</title>
+<!-- Unlisted until launch: not linked from the home page, and kept out of search results. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Press kit for The Third Party, a strategy game from Tozi Cabin Games.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0b0d">
+<style>
+  :root {
+    --bg: #0b0b0d; --panel: #121216; --ink: #e8e8ea; --body: #c3c3c8; --dim: #7a7a82; --rule: #1f1f25;
+    --green: #4fe39b; --amber: #f0b43a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--body);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--ink); text-underline-offset: 3px; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+  .studio { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 28px 0 0; font-family: Georgia, "Iowan Old Style", serif;
+    font-size: 0.9rem; letter-spacing: 0.16em; color: var(--dim); text-decoration: none; }
+  .studio img { width: 30px; height: 30px; }  header.game { display: flex; gap: 22px; align-items: center; padding: 44px 0 30px; border-bottom: 1px solid var(--rule); }
+  header.game img { width: 104px; height: 104px; border-radius: 23px; flex: none; }
+  h1 { margin: 0; font-size: clamp(2rem, 6vw, 2.8rem); letter-spacing: -0.02em; color: var(--ink); font-weight: 750; }
+  .kicker { margin: 6px 0 0; font-size: 1.05rem; color: var(--body); }
+  .kicker b { color: var(--green); font-weight: 600; }
+  h2 { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); font-weight: 650;
+    margin: 46px 0 14px; }
+  p { line-height: 1.65; margin: 0 0 14px; font-size: 1.02rem; }
+  .facts { display: grid; grid-template-columns: 150px 1fr; gap: 10px 18px; margin: 0; font-size: 0.98rem; }
+  .facts dt { color: var(--dim); }
+  .facts dd { margin: 0; color: var(--ink); }
+  .embargo { background: var(--panel); border: 1px solid var(--rule); border-left: 3px solid var(--green);
+    border-radius: 8px; padding: 14px 16px; margin-top: 30px; color: var(--ink); }
+  ul.features { margin: 0; padding-left: 1.1em; line-height: 1.7; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .hero { display: block; margin: 30px 0 0; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; }
+  .hero img { display: block; width: 100%; height: auto; }
+  .hint { font-size: 0.88rem; color: var(--dim); margin-top: -6px; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+  figcaption { font-size: 0.82rem; color: var(--dim); line-height: 1.4; }
+  .shots a { display: block; aspect-ratio: 9 / 19; border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; background: var(--panel); }
+  .shots img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .art { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .art .wide { grid-column: 1 / -1; }
+  .art img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 12px; }
+  .media { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
+  .trailer { width: min(360px, 100%); aspect-ratio: 9 / 16; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--panel); }
+  .trailer iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .trailer.wide { width: 100%; aspect-ratio: 16 / 9; margin-bottom: 16px; }
+  .media video { aspect-ratio: 9 / 16; object-fit: cover; }
+  .media video, .media img { display: block; width: 100%; border: 1px solid var(--rule); border-radius: 14px; background: var(--panel); }
+  .assets a.btn { display: inline-block; border: 1px solid #34343c; border-radius: 8px; padding: 10px 14px; margin: 0 10px 10px 0;
+    text-decoration: none; font-size: 0.92rem; }
+  .copy { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+  footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--dim); }
+  @media (max-width: 640px) {
+    header.game { flex-direction: column; text-align: center; }
+    .facts { grid-template-columns: 1fr; gap: 2px; } .facts dd { margin-bottom: 10px; }
+    .art { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="studio" href="https://tozicabingames.com"><img src="media/tozi-mark.webp" alt="">Tozi Cabin Games</a>
+
+  <header class="game">
+    <img src="icon.png" alt="The Third Party app icon: six silhouetted heads with glowing green eyes.">
+    <div>
+      <h1>The Third Party</h1>
+      <p class="kicker">A hive mind runs for office.</p>
+    </div>
+  </header>
+
+  <a class="hero" href="media/art-third-party.jpg"><img src="media/art-third-party.jpg" alt="Three dark busts lit red, green and blue; only the green one in the middle has glowing eyes. THE THIRD PARTY beneath."></a>
+
+  <div class="embargo">Out October 27 on iPhone. The App Store page goes up in the next few days. If you can, please hold your story until it's live; I'll email you the link the moment it is.</div>
+
+  <h2>Fact sheet</h2>
+  <dl class="facts">
+    <dt>Title</dt><dd>The Third Party</dd>
+    <dt>Developer</dt><dd>Tozi Cabin Games: Tim Attewell, solo</dd>
+    <dt>Platform</dt><dd>iPhone at launch, Android to follow</dd>
+    <dt>Release</dt><dd>October 27, 2026</dd>
+    <dt>Price</dt><dd>Free to download. The free demo runs to your first election night; the full game is a one-time $4.99 purchase.</dd>
+    <dt>App Store</dt><dd>Link coming soon; until then, link this page.</dd>
+    <dt>Press contact</dt><dd><a href="mailto:tozicabingames@gmail.com">tozicabingames@gmail.com</a></dd>
+    <dt>Review access</dt><dd>TestFlight invites and full-game codes on request.</dd>
+  </dl>
+
+  <h2>In one line</h2>
+  <p class="copy">The Third Party is a strategy puzzle game in which you are a mind-controlling alien hive mind trying to take
+    over America by winning elections.</p>
+
+  <h2>Description</h2>
+  <div class="copy"><p>You are a non-violent, mind-controlling alien parasite. Your enemy: democracy. Start in any real American town
+    (your hometown, if you like) and take over the organizations that sway it: the diner, the church, the bank, the sheriff's office.</p>
+    <p>Each organization is a hex board. Assimilate anyone open-minded enough to fall under your control, and push out those too
+    entrenched for it to stick.</p>
+    <p style="margin:0">Around the boards runs a real election, simulated down to the town and the party. Run a candidate for the House,
+    then the Senate, then the White House.</p></div>
+
+  <h2>Features</h2>
+  <ul class="features">
+    <li>Assimilation as a board game: the organizations and social clubs that sway voters are hex boards, taken one person at a
+      time, with showdowns over who leads them.</li>
+    <li>Debate and interview minigames: dodge the tough questions and swipe to as many talking points as you can.</li>
+    <li>The press and the FBI fight back: undercover agents and investigative reporters turn up on the boards.</li>
+    <li>Name your party and set its platform, siding with red, with blue, or dodging the question on issues that change how
+      voters react to you.</li>
+    <li>House, Senate and presidential races on the real election calendar. A free demo plays through your first House race.</li>
+  </ul>
+
+  <h2>About the developer</h2>
+  <p>Tim Attewell started out as a fiction author, stepped back from the arts to study engineering, and now combines storytelling
+    and system-building to make the kind of game he's wanted to play for years. He started a hive-mind game four times before this
+    one, and each time something about the approach was wrong. What finally made it click was a creative constraint: make
+    democracy the player's adversary.</p>
+  <h2>Key art</h2>
+  <p class="hint">Composited from icon art licensed from human artists. No AI-generated imagery.</p>
+  <div class="art">
+    <figure class="wide"><a href="media/art-third-party.jpg"><img src="media/art-third-party.jpg" alt="Three dark busts lit red, green and blue; only the green one in the middle has glowing eyes. THE THIRD PARTY beneath." loading="lazy"></a><figcaption>The third party (the image at the top) · <a href="media/art-third-party-notitle.jpg">without the title</a></figcaption></figure>
+    <figure class="wide"><a href="media/art-rally.jpg"><img src="media/art-rally.jpg" alt="The Capitol lit green from within, a crowd with glowing green eyes in front of it." loading="lazy"></a><figcaption>The rally · <a href="media/art-rally-notitle.jpg">without the title</a></figcaption></figure>
+  </div>
+  <p class="hint" style="margin-top:22px">Public-domain photographs (Harris &amp; Ewing, 1905–1913, Library of Congress, no known restrictions),
+    altered, free to use. The game itself is set in the present day.</p>
+  <div class="art">
+    <figure class="wide"><a href="media/art-paint-creek.jpg"><img src="media/art-paint-creek.jpg" alt="Five senators seated in a row in 1913, every eye and tie glowing green." loading="lazy"></a><figcaption>Senate subcommittee, 1913</figcaption></figure>
+    <figure><a href="media/art-military-committee.jpg"><img src="media/art-military-committee.jpg" alt="A House committee round a long table, every face with glowing green eyes." loading="lazy"></a><figcaption>House committee, early 1900s</figcaption></figure>
+    <figure><a href="media/art-steel-committee.jpg"><img src="media/art-steel-committee.jpg" alt="A 1912 House committee of six, every eye and tie green." loading="lazy"></a><figcaption>House committee, 1912</figcaption></figure>
+    <figure class="wide"><a href="media/art-paint-creek-banner.jpg"><img src="media/art-paint-creek-banner.jpg" alt="Banner crop: five faces and ties, green." loading="lazy"></a><figcaption>Banner crop</figcaption></figure>
+  </div>
+
+  <h2>Screenshots</h2>
+  <p class="hint">Tap any to open the full-size PNG.</p>
+  <a class="hero" style="margin:0 0 18px" href="media/map-wide.png"><img src="media/map-wide.png" alt="The national House map, districts turning green." loading="lazy"></a>
+  <div class="shots">
+    <figure><a href="media/shot-1-board.png"><img src="media/shot-1-board.png" alt="A board: the Bethlehem Bowling League, mid-take" loading="lazy"></a><figcaption>A board: the Bethlehem Bowling League, mid-take</figcaption></figure>
+    <figure><a href="media/town-independence.png"><img src="media/town-independence.png" alt="A town and the organizations that sway it" loading="lazy"></a><figcaption>A town and the organizations that sway it</figcaption></figure>
+    <figure><a href="media/district-mo5.png"><img src="media/district-mo5.png" alt="A district, its towns and the race" loading="lazy"></a><figcaption>A district, its towns and the race</figcaption></figure>
+    <figure><a href="media/house-strategy.png"><img src="media/house-strategy.png" alt="Choosing which House races to enter" loading="lazy"></a><figcaption>Choosing which House races to enter</figcaption></figure>
+    <figure><a href="media/objectives-platform.png"><img src="media/objectives-platform.png" alt="Congress, the White House, the Court and the platform" loading="lazy"></a><figcaption>Congress, the White House, the Court and the platform</figcaption></figure>
+    <figure><a href="media/shot-0-map.png"><img src="media/shot-0-map.png" alt="The national map, turning green" loading="lazy"></a><figcaption>The national map, turning green</figcaption></figure>
+    <figure><a href="media/name-your-party.png"><img src="media/name-your-party.png" alt="Naming the party" loading="lazy"></a><figcaption>Naming the party</figcaption></figure>
+    <figure><a href="media/shot-2-board-early.png"><img src="media/shot-2-board-early.png" alt="A board, early on" loading="lazy"></a><figcaption>A board, early on</figcaption></figure>
+    <figure><a href="media/shot-5-district.png"><img src="media/shot-5-district.png" alt="Another district" loading="lazy"></a><figcaption>Another district</figcaption></figure>
+  </div>
+
+  <h2>Video</h2>
+  <div class="trailer wide">
+    <iframe src="https://www.youtube.com/embed/4rntRXeYCmw" title="The Third Party, trailer 1" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <div class="trailer">
+    <iframe src="https://www.youtube.com/embed/_s36SlHRhpc" title="The Third Party, trailer 1, vertical" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <p class="hint">Trailer 1, 26 seconds, on YouTube: <a href="https://youtu.be/4rntRXeYCmw">landscape</a> ·
+    <a href="https://youtube.com/shorts/_s36SlHRhpc">vertical (a Short)</a>. Download:
+    <a href="media/video/the-third-party-trailer-1.mp4">vertical, 1080 × 1920</a> ·
+    <a href="media/video/the-third-party-trailer-1-landscape.mp4">landscape, 1920 × 1080</a> (H.264, 60 fps, with sound)</p>
+  <h2>Loops</h2>
+  <p class="hint">One idea each, a few seconds, looping. Every one as a GIF or a muted MP4, vertical or landscape; the MP4s are a
+    fraction of the size.</p>
+  <div class="media">
+    <figure><video src="media/loops/board-take-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="A board: a route dragged, the take, looping"></video>
+      <figcaption>A board: a route dragged, the take<br>GIF <a href="media/loops/board-take-vertical.gif">vertical</a> · <a href="media/loops/board-take-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/board-take-vertical.mp4">vertical</a> · <a href="media/loops/board-take-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/we-are-inevitable-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="We are inevitable: the board swept green, looping"></video>
+      <figcaption>We are inevitable: the board swept green<br>GIF <a href="media/loops/we-are-inevitable-vertical.gif">vertical</a> · <a href="media/loops/we-are-inevitable-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/we-are-inevitable-vertical.mp4">vertical</a> · <a href="media/loops/we-are-inevitable-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/map-modes-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="The map: House, Senate, President, looping"></video>
+      <figcaption>The map: House, Senate, President<br>GIF <a href="media/loops/map-modes-vertical.gif">vertical</a> · <a href="media/loops/map-modes-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/map-modes-vertical.mp4">vertical</a> · <a href="media/loops/map-modes-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/house-goes-green-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="The House turning green, looping"></video>
+      <figcaption>The House turning green<br>GIF <a href="media/loops/house-goes-green-vertical.gif">vertical</a> · <a href="media/loops/house-goes-green-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/house-goes-green-vertical.mp4">vertical</a> · <a href="media/loops/house-goes-green-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/pull-out-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="From a town out to the country, looping"></video>
+      <figcaption>From a town out to the country<br>GIF <a href="media/loops/pull-out-vertical.gif">vertical</a> · <a href="media/loops/pull-out-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/pull-out-vertical.mp4">vertical</a> · <a href="media/loops/pull-out-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/stance-cards-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Setting the platform, issue by issue, looping"></video>
+      <figcaption>Setting the platform, issue by issue<br>GIF <a href="media/loops/stance-cards-vertical.gif">vertical</a> · <a href="media/loops/stance-cards-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/stance-cards-vertical.mp4">vertical</a> · <a href="media/loops/stance-cards-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/fbi-raid-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="An FBI agent, a bribe, a raid, looping"></video>
+      <figcaption>An FBI agent, a bribe, a raid<br>GIF <a href="media/loops/fbi-raid-vertical.gif">vertical</a> · <a href="media/loops/fbi-raid-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/fbi-raid-vertical.mp4">vertical</a> · <a href="media/loops/fbi-raid-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/story-broke-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="A story breaks, looping"></video>
+      <figcaption>A story breaks<br>GIF <a href="media/loops/story-broke-vertical.gif">vertical</a> · <a href="media/loops/story-broke-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/story-broke-vertical.mp4">vertical</a> · <a href="media/loops/story-broke-landscape.mp4">landscape</a></figcaption></figure>
+    <figure><video src="media/loops/the-third-party-vertical.mp4" autoplay muted loop playsinline preload="metadata" aria-label="The third party, looping"></video>
+      <figcaption>The third party<br>GIF <a href="media/loops/the-third-party-vertical.gif">vertical</a> · <a href="media/loops/the-third-party-landscape.gif">landscape</a>
+        &nbsp;MP4 <a href="media/loops/the-third-party-vertical.mp4">vertical</a> · <a href="media/loops/the-third-party-landscape.mp4">landscape</a></figcaption></figure>
+  </div>
+
+  <h2>Assets</h2>
+  <div class="assets">
+    <a class="btn" href="third-party-press-kit.zip" download>Everything (.zip, 13 MB)</a>
+    <a class="btn" href="icon.png" download>App icon (1024 × 1024 PNG)</a>
+  </div>
+
+  <footer>© 2026 Tozi Cabin Games · <a href="https://tozicabingames.com">tozicabingames.com</a></footer>
+</div>
+</body>
+</html>
