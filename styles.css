@@ -14,7 +14,7 @@
      which turns on the dark scrim and the label backdrop that keep the type readable. */
   --art-syntherion: url("img/syntherion-hero.webp");
 
-  --art-third-party: url("img/the-third-party-hero.webp");
+  --art-third-party: url("img/the-third-party-busts.webp");
 }
 
 * { box-sizing: border-box; }
@@ -116,10 +116,11 @@ body {
 }
 .panel--third-party .panel__art {
   background-image: var(--art-third-party);
-  /* The in-game menu's MRI plate, baked to a still: the tint, highlight lift, feathered
-     plate edge and vignette all come from MenuBackground.js in the game. The head sits
-     dead centre with the parasite above the label, so don't bias the crop. */
-  background-position: center;
+  /* The game's key art, the app icon's three busts (assets/source/the-third-party-busts.jpg,
+     from the game's press kit). Zoomed and lifted so the green one's eyes sit above the
+     label rather than under it. */
+  background-size: auto 114%;
+  background-position: center 100%;
 }
 
 .panel__label {
@@ -154,8 +155,8 @@ body {
 
 /* Dial the softness here. 0 turns the blur off entirely. */
 .panel--has-art { --art-blur: 7px; }
-/* the MRI has no aliasing to hide, and a full blur smears the parasite into a blot */
-.panel--third-party { --art-blur: 3px; }
+/* the busts are clean vector-like art with nothing to hide; a blur only dulls the eyes */
+.panel--third-party { --art-blur: 0px; }
 
 .panel--has-art .panel__art {
   filter: blur(var(--art-blur));
