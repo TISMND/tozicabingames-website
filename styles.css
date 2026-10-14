@@ -123,7 +123,7 @@ body {
 }
 
 .panel--syntherion { cursor: pointer; }
-.panel--third-party { cursor: default; }
+.panel--third-party { cursor: pointer; }
 
 /* divider between the halves */
 .panel + .panel::before {
@@ -300,14 +300,14 @@ body {
     transform: translateY(0);
   }
 
-  .panel--syntherion:focus-visible .panel__title,
-  .panel--syntherion:focus-visible .panel__note {
+  .panel:focus-visible .panel__title,
+  .panel:focus-visible .panel__note {
     opacity: 1;
     transform: none;
   }
 }
 
-.panel--syntherion:focus-visible {
+.panel:focus-visible {
   outline: 1px solid var(--ink);
   outline-offset: -6px;
 }
@@ -323,7 +323,7 @@ body {
    The carousel read as a gallery of many things rather than a choice between two,
    and its peek left odd margins down both edges. Two stacked halves with explicit
    buttons say "pick one" much more plainly. Syntherion's button is filled and
-   pressable; The Third Party's is an outline that deliberately looks inert.          */
+   pressable; since 2026-10-14 The Third Party's is too, to its own page.             */
 
 @media (max-width: 700px) {
   .panels { flex-direction: column; }
@@ -359,16 +359,10 @@ body {
   }
 
   /* filled = you can press this */
-  .panel--syntherion .panel__note {
+  .panel--syntherion .panel__note,
+  .panel--third-party .panel__note {
     background: var(--ink);
     color: var(--bg);
-  }
-
-  /* outline = a button shape that is plainly not live */
-  .panel--third-party .panel__note {
-    background: rgba(11, 11, 13, 0.35);
-    border-color: rgba(232, 232, 234, 0.35);
-    color: rgba(232, 232, 234, 0.65);
   }
 
   /* the lockup owns the middle of the screen, straddling the two halves */

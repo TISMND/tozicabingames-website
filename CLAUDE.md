@@ -1,8 +1,10 @@
 # tozicabingames.com
 
 Landing page for Tozi Cabin Games. One static page, two games: Syntherion links out
-to syntheriongame.com, The Third Party (formerly Assimilarium) is "coming soon" with no
-link yet.
+to syntheriongame.com, The Third Party (formerly Assimilarium) links to its own public page,
+`thirdparty/` (since 2026-10-14; "App Store page coming soon" until the store link is live).
+The press kit is `thirdparty/press/`, unlisted and `noindex`; its source is the game repo's
+`docs/press/thirdparty-kit/`.
 
 ## Deploying
 
