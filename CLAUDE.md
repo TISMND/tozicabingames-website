@@ -41,11 +41,13 @@ Image pipeline, since the repo and Pages root are both public and hero art is he
 
 ### Icons
 
-The cabin mark is black on transparent (`assets/source/cabin-mark.png`). It is inverted
-to white on the site's `#0b0b0d` and baked onto an opaque tile, because a black mark on
-transparent vanishes in a dark-mode tab strip, and iOS fills transparency with black
-anyway. Small sizes get less padding and a gamma lift on the mask — thin log strokes
-average to mid-grey when downscaled and otherwise read as a smudge at 16px.
+The favicons are the studio's logo, the trail patch (locked 2026-10-14): a disc of stars over
+the mountains with the cabin at its foot, in moonlight. The source is
+`assets/source/patch-mark.png`, its full-bleed square, which is made and kept in
+assimilarium-mobile (`docs/tozi-cabin-games/`, with the circle, banner and YouTube banner).
+`python assets/source/bake-favicon.py` writes all four: the apple-touch-icon is the whole
+square, the tab sizes are cropped in to the disc so the cabin gets every pixel. All opaque.
+The old cabin mark (`assets/source/cabin-mark.png`) is kept as history, no longer used.
 
 ## Layout
 
