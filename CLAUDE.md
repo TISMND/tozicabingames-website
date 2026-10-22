@@ -1,8 +1,10 @@
 # tozicabingames.com
 
-Landing page for Tozi Cabin Games. One static page, two games: Syntherion links out
-to syntheriongame.com, The Third Party (formerly Assimilarium) links to its own public page,
-`thirdparty/` (since 2026-10-14; "App Store page coming soon" until the store link is live).
+Landing page for Tozi Cabin Games. One static page, three games (since 2026-10-21): Syntherion,
+The Third Party (formerly Assimilarium) and Quiet World, all phone games, all "In development" for now.
+Only The Third Party links anywhere, to its own public page `thirdparty/` (since 2026-10-14; "App Store
+page coming soon" until the store link is live). Syntherion's link to syntheriongame.com is off while
+that site shows the old desktop game; Quiet World has no page yet. A game with no link is a `div.panel`.
 The press kit is `thirdparty/press/`, unlisted and `noindex`; its source is the game repo's
 `docs/press/thirdparty-kit/`.
 
@@ -11,6 +13,14 @@ studio's Cloudflare R2 bucket (the one `syntherion-website/scripts/upload-r2.js`
 `.env`), under `thirdparty/`, served from
 `https://pub-e52e55062eab45daaa777a6bec1f03ca.r2.dev/thirdparty/<name>`. Video, GIFs and zips go
 there; stills and art stay in the repo.
+
+**Each game's home-page loop is on R2 too**, at `<game>/home-loop-v<n>.mp4` (`syntherion/`,
+`thirdparty/`, `quietworld/`). They are cached as immutable, so a new cut is a new `-v<n>`, never an
+overwrite. Each is made in its game's own repo and session, which drops it in `local-media/` here
+(gitignored) for a look before it goes up. The spec those sessions work to: 720x1560 (9:19.5, the
+phone frame's screen), H.264, yuv420p, no audio, +faststart, 30 fps, 3 MB or less, 10-15 s of short
+shots (1.5-2.5 s) looping cleanly, nothing important in the top ~4% (the camera island). The remakers:
+synth-mobile `scripts/film-reel.mjs`, quiet-world's and assimilarium-mobile's own reel scripts.
 
 ## Deploying
 
@@ -59,49 +69,60 @@ The old cabin mark (`assets/source/cabin-mark.png`) is kept as history, no longe
 
 ## Layout
 
-Desktop is two full-height halves side by side. Hover brightens one and dims the other.
-
-Mobile (`max-width: 700px`) is the same two panels stacked, with the studio name across
-the centre seam and an explicit button in each half. **Do not reintroduce a carousel** —
-a horizontal snap-scroller was tried and rejected: on a real phone the peek left odd
-vertical margins and the whole thing read as a gallery of many items rather than a
-choice between two.
+**The studio's band** across the top, then **one column per game**, each with the game playing in a
+drawn phone over its own art, blurred and dimmed (2026-10-21). On desktop, hover (or focus) brightens
+one column and plays its loop; the other two step back. On a phone (`max-width: 700px`) the games stack
+down the page, each most of a screen, and the one crossing the middle of the screen plays. **Do not
+reintroduce a carousel**: a horizontal snap-scroller was tried and rejected, it read as a gallery of
+many items rather than a choice.
 
 Some decisions that look arbitrary but are not:
 
-- **`.panel--has-art`** gates the scrim, the label backdrop and the text shadows. Any
-  panel given a real image needs this class, or its type will sit unprotected on the art.
-- **The blur stays on through hover.** It hides aliasing in the source art, and visitors
-  meet the sharp version on the game's own site anyway. `--art-blur` tunes it; `0` is off.
-  Because the blur no longer animates, only opacity and transform move on hover.
+- **The band** is the studio's, so it belongs to no game: with three columns there is no centre seam
+  for the logo to sit on (it used to straddle the line between two halves). Its scene is option C of
+  the YouTube banner bench with the cabin taken out (the logo has its own) and the moon moved right of
+  the lockup: `assets/source/studio-band-bench.html`. It needs assimilarium-mobile's
+  `app/tools/tozi-logo/` images beside it to render; shoot it at 2560x1440 with `?render=2`, then crop
+  `2560:460:0:540` to `img/studio-band.webp`.
+- **The lockup** is the logo's: the trail-patch circle beside TOZI / CABIN GAMES in the logo's own faces
+  (Bebas Neue, Public Sans; self-hosted in `fonts/`), in a dark pill. The logo and its exports live in
+  assimilarium-mobile (`docs/tozi-cabin-games/`).
+- **The phone's screen, not its body, is 9:19.5** (a current iPhone), so 720x1560 loops fill it exactly;
+  the body is the screen plus a bezel. A 9:16 loop would sit in it with bands top and bottom.
+- **Phones, not full-bleed video** [TIM 2026-10-21]: the loops are app screens and portrait play, which
+  a full-bleed column crop cut up, and all three are phone games.
+- **At rest each screen shows a still**: Syntherion's ringed planet over the grid, The Third Party's key
+  art cropped to the green bust (the app icon's), Quiet World's night globe (a frame of its reel). The
+  loop fades in over it once it has a frame.
+- **`loops.js` is the page's only script**, ~50 lines: hover/focus to play with a mouse, the screen's
+  middle line on touch, asked at every event so a window that changes mode follows. `preload="none"`,
+  so nothing downloads until a game is chosen; reduced motion keeps the stills. Without it the page is
+  still whole, as stills.
+- **`.panel--has-art`** gates the scrim, the label backdrop and the text shadows. Any panel with an
+  image needs it.
 - **The art is overscaled** (`1.06`) because blur bleeds transparency in from the edges.
-- **`filter` is not additive.** Any rule that sets `filter` must restate the blur, or
-  that panel silently snaps into focus.
-- **Scrim is set per panel on mobile.** The two arts differ a lot in brightness; a
-  shared value crushes one or washes out the other.
-- **The Third Party art is the app icon's three busts** (2026-10-14), the game's key art from its press kit
-  (`assets/source/the-third-party-busts.jpg`), zoomed and anchored low so the green one's eyes sit above the
-  title; no blur. It replaced the baked MRI menu (`bake-third-party.py` and the scan stay in `assets/source/`);
-  if the MRI ever returns, so must its Wellcome Collection CC BY 4.0 credit line (`.panel__credit`).
-- **Each game's title is its own lettering, as an image**: Syntherion's is its menu's neon logo shot from the
-  game's build (`assets/source/syntherion-title.png`, the full title screen beside it), The Third Party's the
-  press kit's title. Their widths are set so the letters match; the alt text carries the names.
-- **The studio is its logo's lockup** (2026-10-14): the trail-patch circle beside TOZI / CABIN GAMES in the
-  logo's own faces (Bebas Neue, Public Sans; self-hosted in `fonts/`), in a dark pill. It sits centred on the
-  line between the two games at both breakpoints -- at the top on desktop, straddling the seam on a phone -- so
-  it belongs to neither. A big circle on the desktop seam fought the titles; the name alone on a phone sat on
-  The Third Party's poster and read as that game's. The logo and its exports live in assimilarium-mobile
-  (`docs/tozi-cabin-games/`).
-- The page currently ships **zero JavaScript**. Worth preserving if you can.
+- **`filter` is not additive.** Any rule that sets `filter` must restate the blur.
+- **Each game's title is its own lettering**: Syntherion's is its menu's neon logo shot from the game's
+  build (`assets/source/syntherion-title.png`), The Third Party's the press kit's title. Quiet World has
+  no lettering yet: its title screen's words, Figtree Light in spaced capitals (`fonts/figtree-light.ttf`).
+  The alt text carries the names.
+- **The Third Party's old art was a baked MRI** (`bake-third-party.py` and the scan stay in
+  `assets/source/`); if it ever returns, so must its Wellcome Collection CC BY 4.0 credit line
+  (`.panel__credit`).
+- **`og-image.jpg`** is a 1200x630 shot of the page itself. Remake it with headless Chrome against the
+  file, not the dev server (browser-sync's socket keeps the page from settling):
+  `chrome --headless=new --window-size=1200,630 --force-device-scale-factor=2 --screenshot=... file:///.../index.html`,
+  then scale to 1200x630.
 
 ## Verification gotcha
 
 `resize_window` in the browser tooling reports success but does not change the viewport
-here — `innerWidth` stays put, so mobile screenshots silently come back as desktop. To
-actually see the mobile layout, temporarily invert the media queries in `styles.css`
-(`max-width: 700px` → `4000px`, and neutralise the `hover: hover` block), and pin the
-type sizes, because `vw` units read the real window and render several times too large.
-Back up the file first and revert afterwards. Better still: ask Tim for a screenshot.
+here — `innerWidth` stays put, so mobile screenshots silently come back as desktop. To see
+the phone layout, load the page in a 390px-wide `<iframe>` (its own viewport, so the media
+queries and `vw` follow it). The iframe still has a mouse, so to test scroll-to-play give it
+a `srcdoc` with a script ahead of `loops.js` that answers `matchMedia('(hover: hover)...')`
+with `matches: false`. browser-sync mirrors scrolling across open copies of the page. Best of
+all: ask Tim for a screenshot from his phone.
 
 ## Not in this repo
 

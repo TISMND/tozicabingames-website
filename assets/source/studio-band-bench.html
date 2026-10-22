@@ -1,0 +1,190 @@
+<!doctype html>
+<!--
+  tozi-banner.html -- 2026-10-14
+  The ask [TIM]: "something in the same style that would make a good banner image to go on top of this on its youtube
+  channel page" -- the Tozi Cabin Games logo (app/tools/tozi-logo.html, locked E1b) is the channel's avatar.
+  YouTube's banner is 2560 x 1440; a TV shows all of it, a desktop a 2560 x 423 strip through the middle, a phone
+  only the 1546 x 423 safe area in the centre -- so the name and the cabin live in that box and the sky, stars and
+  ridges run out past it. The look is the logo's: pack icons dark with lit edges, moonlight, the patch's stars.
+  Three ways: A the name left and the cabin right, B the name over the cabin in the middle, C the scene alone.
+  Chosen [TIM 2026-10-14 "Yes definitely A"]: docs/tozi-cabin-games/youtube-banner.png.
+  ?render=<n> draws option n alone at 2560 x 1440 -- tools/tozi_banner.py shoots it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tozi Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root { --ground: #0d1218; --panel: #131a22; --line: #202b38; --line2: #2b3949; --ink: #e6edf3; --body: #c6d0da; --dim: #7d8996; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #07090c; color: var(--ink); font-family: "Public Sans", system-ui, sans-serif; padding: 24px 16px 60px; }
+  h1 { font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--dim); font-weight: 600; margin: 0 0 6px; }
+  .sub { color: var(--body); font-size: 13px; margin: 0 0 18px; max-width: 860px; line-height: 1.45; }
+  .controls { display: flex; gap: 12px; align-items: center; margin-bottom: 22px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--dim); }
+  .seg { display: flex; border: 1px solid var(--line2); border-radius: 8px; overflow: hidden; }
+  .seg button { background: var(--panel); color: var(--dim); border: 0; padding: 7px 11px; font: 600 10.5px "Public Sans"; letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line2); }
+  .seg button.on { background: #1f2a36; color: var(--ink); }
+  .opt { margin-bottom: 44px; max-width: 1400px; }
+  .opt h2 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  .opt h2 b { color: var(--dim); font-size: 11px; letter-spacing: 1.3px; margin-right: 8px; }
+  .opt p { color: var(--body); font-size: 12.5px; margin: 0 0 12px; }
+  .lab { font-size: 10.5px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--dim); font-weight: 600; margin: 14px 0 6px; }
+  .frame { position: relative; width: 100%; line-height: 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+  .frame svg { width: 100%; height: auto; display: block; }
+  .crop { position: relative; overflow: hidden; border-radius: 6px; border: 1px solid var(--line); line-height: 0; }
+  .crop svg { position: absolute; left: 0; display: block; }
+  .row { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .page { display: flex; gap: 12px; align-items: center; padding: 12px 14px; background: #0f0f0f; border-radius: 0 0 6px 6px; }
+  .page img { width: 56px; height: 56px; border-radius: 50%; }
+  .page .n { font: 700 18px "Public Sans"; } .page .h { font: 400 12px "Public Sans"; color: #aaa; margin-top: 3px; }
+</style>
+</head>
+<body>
+<h1>Tozi Cabin Games -- YouTube banner</h1>
+<p class="sub">2560 x 1440. A TV shows all of it, a desktop the strip through the middle, a phone only the dashed safe area -- so the name and the cabin sit inside it. Each option full, then as a desktop and a phone see it, the channel's avatar under.</p>
+<div class="controls"><span>Safe area</span><div class="seg" id="safe"><button data-k="1" class="on">Show</button><button data-k="0">Hide</button></div></div>
+<div id="out"></div>
+
+<script>
+const W = 2560, H = 1440, SAFE = { x: 507, y: 508, w: 1546, h: 423 };
+const P = { a: '#aebfce', b: '#ffffff', sky: '#18222d', dark: '#06080b', far: '#101820', mid: '#0b1118' };
+const SIZE = {"black-silhouette-of-a-house":[480,480],"mountain-landscape":[480,354],"mountain-peaks":[480,284],"mountain-terrain":[480,161],"mountain-pyramid-shaped-terrain":[480,313],"mountain-peaks-star-dots":[480,476],"patch-mountains":[480,235]};
+
+// a seeded scatter, so every render is the same sky
+function rng(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+function starField(seed, n, top, bottom, keep) {
+  const r = rng(seed), out = [];
+  while (out.length < n) {
+    const x = r() * W, y = top + r() * (bottom - top), big = r();
+    if (keep && keep(x, y)) continue;
+    out.push([x, y, big > 0.97 ? 9 : big > 0.85 ? 5 : 2.4 + r() * 1.6, 0.35 + r() * 0.6]);
+  }
+  return out;
+}
+
+const OPTIONS = [
+  { k: 'A', n: 'Name left, cabin right', how: 'the wordmark in the left of the safe area, the cabin under the moon on the right', text: { x: 640, y: 735, anchor: 'start' },
+    moon: [1800, 590, 70], cabin: [1640, 905, 160] },
+  { k: 'B', n: 'Name over the cabin', how: 'the cabin in the middle on the ridge, the wordmark over it, the moon off to the side', text: { x: 1280, y: 660, anchor: 'middle' },
+    moon: [1880, 590, 60], cabin: [1280, 915, 140] },
+  { k: 'C', n: 'The scene alone', how: 'no words -- the avatar and the channel name already say it; the cabin and the moon carry the strip', text: null,
+    moon: [2270, 730, 46], cabin: [9000, 910, 150] },
+];
+
+let uid = 0;
+const hex = h => [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16) / 255);
+function tint(id, h) {
+  const [r, g, b] = hex(h);
+  return `<filter id="${id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 ${r} 0 0 0 0 ${g} 0 0 0 0 ${b} 0 0 0 1 0"/></filter>`;
+}
+function edge(id, h, dy) {
+  return `<filter id="${id}" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+    <feOffset in="SourceAlpha" dy="${dy}" result="o"/><feComposite in="SourceAlpha" in2="o" operator="out" result="e"/>
+    <feGaussianBlur in="e" stdDeviation="1" result="s"/><feFlood flood-color="${h}"/><feComposite in2="s" operator="in"/></filter>`;
+}
+// one pack icon, its foot at (x, b), long side s, dark in tone with a lit top edge
+function ridge(i, x, b, s, tone, rim, flip) {
+  const [w0, h0] = SIZE[i], q = s / Math.max(w0, h0), w = w0 * q, h = h0 * q;
+  const im = f => `<image href="tozi-logo/${i}.png" x="${-w / 2}" y="${-h}" width="${w}" height="${h}" filter="url(#${f})"/>`;
+  return `<g transform="translate(${x},${b}) scale(${flip ? -1 : 1},1)">${im(tone)}<g opacity="${rim}">${im('rim')}</g></g>`;
+}
+
+function banner(o, safe) {
+  uid++;
+  const [mx, my, mr] = o.moon, [cx, cb, cs] = o.cabin;
+  const textBox = o.text ? (x, y) => o.text.anchor === 'start' ? (x > 600 && x < 1330 && y > 560 && y < 830)
+    : (x > 860 && x < 1700 && y > 540 && y < 780) : null;
+  const stars = starField(7 + uid, 260, 30, 900, (x, y) => Math.hypot(x - mx, y - my) < mr * 1.8 || (textBox && textBox(x, y)));
+  let defs = `
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05070a"/><stop offset="0.55" stop-color="#0c1219"/><stop offset="0.68" stop-color="#16202b"/><stop offset="1" stop-color="#06080b"/></linearGradient>
+    <radialGradient id="mg" gradientUnits="userSpaceOnUse" cx="${mx}" cy="${my}" r="${mr * 9}">
+      <stop offset="0" stop-color="${P.a}" stop-opacity="0.2"/><stop offset="1" stop-color="${P.a}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="core" cx="40%" cy="38%" r="70%">
+      <stop offset="0" stop-color="${P.b}"/><stop offset="0.5" stop-color="#d6e0ea"/><stop offset="1" stop-color="${P.a}"/></radialGradient>
+    <linearGradient id="door" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.b}"/><stop offset="1" stop-color="${P.a}"/></linearGradient>
+    ${tint('far', P.far)}${tint('mid', P.mid)}${tint('dk', P.dark)}${edge('rim', P.a, 4)}
+    <filter id="bl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="sg" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="dg" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14"/></filter>`;
+  let b = `<rect width="${W}" height="${H}" fill="url(#sky)"/><rect width="${W}" height="${H}" fill="url(#mg)"/>`;
+  // the stars, as the patch has them: pale discs, the big ones haloed
+  for (const [x, y, r, a] of stars) {
+    if (r > 4) b += `<circle cx="${x}" cy="${y}" r="${r * 2.2}" fill="${P.a}" opacity="${a * 0.5}" filter="url(#sg)"/>`;
+    b += `<circle cx="${x}" cy="${y}" r="${r}" fill="${r > 4 ? P.a : '#cfd9e3'}" opacity="${a}"/>`;
+  }
+  // the moon
+  b += `<circle cx="${mx}" cy="${my}" r="${mr}" fill="${P.a}" opacity="0.55" filter="url(#bl)"/><circle cx="${mx}" cy="${my}" r="${mr}" fill="url(#core)"/>`;
+  // the logo's own range, two deep across the whole width, under the moon; the ground in front for the cabin
+  const R = rng(3);
+  let ranges = '';
+  for (const [base, s0, tone, rim] of [[975, 700, 'far', 0.35], [1010, 560, 'mid', 0.6]]) {
+    for (let x = -260 + R() * 200, n = 0; x < W + 300; n++) {
+      const s = s0 * (0.82 + R() * 0.36);
+      ranges += ridge('patch-mountains', x, base, s, tone, rim, n % 2);
+      x += s * (0.62 + R() * 0.2);
+    }
+  }
+  b += ranges;
+  // a still lake below the horizon, only a TV sees it: the moon and the ranges upside down, faint
+  const hy = cb - 4;
+  b += `<rect x="0" y="${hy}" width="${W}" height="${H}" fill="${P.dark}"/>
+    <g transform="translate(0,${2 * hy}) scale(1,-1)" opacity="0.16">${ranges}</g>
+    <ellipse cx="${mx}" cy="${2 * hy - my}" rx="${mr * 0.8}" ry="${mr * 1.6}" fill="${P.a}" opacity="0.16" filter="url(#bl)"/>
+    <ellipse cx="${mx}" cy="${hy + (hy - my) * 0.55}" rx="${mr * 0.5}" ry="${(hy - my) * 0.55}" fill="${P.a}" opacity="0.08" filter="url(#dg)"/>
+    <rect x="0" y="${hy}" width="${W}" height="3" fill="${P.a}" opacity="0.18"/>`;
+  // the cabin, the logo's, its door open and lit, light spilling onto the ground
+  const [w0, h0] = SIZE['black-silhouette-of-a-house'], cw = cs * w0 / Math.max(w0, h0), ch = cs * h0 / Math.max(w0, h0);
+  b += `<g transform="translate(${cx},${cb - ch / 2})">
+    <ellipse cx="0" cy="${ch * 0.52}" rx="${cw * 0.35}" ry="${ch * 0.08}" fill="${P.a}" opacity="0.35" filter="url(#dg)"/>
+    <rect x="${-0.1 * cw}" y="${0.2 * ch}" width="${0.2 * cw}" height="${0.3 * ch}" fill="${P.a}" filter="url(#dg)" opacity="0.8"/>
+    <rect x="${-0.12 * cw}" y="${0.16 * ch}" width="${0.24 * cw}" height="${0.34 * ch}" fill="url(#door)"/>
+    <image href="tozi-logo/black-silhouette-of-a-house.png" x="${-cw / 2}" y="${-ch / 2}" width="${cw}" height="${ch}" filter="url(#dk)"/>
+    <image href="tozi-logo/black-silhouette-of-a-house.png" x="${-cw / 2}" y="${-ch / 2}" width="${cw}" height="${ch}" filter="url(#rim)" opacity="0.9"/></g>`;
+  // the wordmark, the logo's
+  if (o.text) {
+    const t = o.text;
+    b += `<text x="${t.x}" y="${t.y}" text-anchor="${t.anchor}" font-family="Bebas Neue" font-size="230" letter-spacing="12" fill="#e6edf3">TOZI</text>
+      <text x="${t.anchor === 'start' ? t.x + 6 : t.x + 23}" y="${t.y + 80}" text-anchor="${t.anchor}" font-family="Public Sans" font-weight="600" font-size="46" letter-spacing="23" fill="${P.a}">CABIN GAMES</text>`;
+  }
+  if (safe) b += `<rect x="${SAFE.x}" y="${SAFE.y}" width="${SAFE.w}" height="${SAFE.h}" fill="none" stroke="#f0b43a" stroke-width="4" stroke-dasharray="18 12"/>`;
+  // every id its own, or the page's second banner reads the first one's moon
+  const k = '_' + uid;
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs>${b}</svg>`
+    .replace(/id="(\w+)"/g, `id="$1${k}"`).replace(/url\(#(\w+)\)/g, `url(#$1${k})`);
+}
+
+// a crop of the banner: the window (x, y, w, h) of the 2560 x 1440 drawn at width px
+function crop(o, x, y, w, h, px) {
+  const k = px / w, svg = banner(o);
+  return `<div class="crop" style="width:${px}px;height:${h * k}px;max-width:100%"><svg viewBox="0 0 ${W} ${H}" style="width:${W * k}px;top:${-y * k}px;left:${-x * k}px">${svg.slice(svg.indexOf('>') + 1)}</div>`;
+}
+
+let safe = true;
+function draw() {
+  let html = '';
+  for (const o of OPTIONS) {
+    html += `<div class="opt"><h2><b>${o.k}</b>${o.n}</h2><p>${o.how}</p>
+      <div class="lab">TV -- all of it</div><div class="frame">${banner(o, safe)}</div>
+      <div class="lab">Desktop</div>${crop(o, 0, SAFE.y, W, SAFE.h, 1280)}
+      <div class="page"><img src="../../docs/tozi-cabin-games/mark-circle-256.png" alt=""><div><div class="n">Tozi Cabin Games</div><div class="h">@tozicabingames</div></div></div>
+      <div class="lab">Phone</div>${crop(o, SAFE.x, SAFE.y, SAFE.w, SAFE.h, 390)}</div>`;
+  }
+  document.getElementById('out').innerHTML = html;
+}
+document.getElementById('safe').addEventListener('click', e => {
+  const k = e.target.dataset.k; if (k == null) return;
+  safe = k === '1'; for (const b of document.querySelectorAll('#safe button')) b.classList.toggle('on', b.dataset.k === k); draw();
+});
+const rq = new URLSearchParams(location.search).get('render');
+if (rq != null && OPTIONS[+rq]) {
+  document.body.style.cssText = 'margin:0;padding:0;background:#06080b';
+  document.body.innerHTML = banner(OPTIONS[+rq], false);
+  document.querySelector('svg').setAttribute('style', `width:${W}px;height:${H}px;display:block`);
+} else draw();
+</script>
+</body>
+</html>

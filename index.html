@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tozi Cabin Games</title>
-<meta name="description" content="Tozi Cabin Games is an independent studio making high-concept sci-fi games. Syntherion and The Third Party are both in development.">
+<meta name="description" content="Tozi Cabin Games is an independent studio making games for phones. Three in development: Syntherion, The Third Party and Quiet World.">
 <link rel="canonical" href="https://tozicabingames.com/">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -14,13 +14,14 @@
 <meta name="theme-color" content="#0b0b0d">
 <link rel="preload" href="fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<script src="loops.js" defer></script>
 
 <!-- og:site_name is deliberately omitted: it renders directly above og:title on
      Discord and Slack, and with both set to the studio name the card stacked the
      same words twice. The name lives in og:title instead, where every platform
      shows it. -->
-<meta property="og:title" content="Tozi Cabin Games — high-concept sci-fi games">
-<meta property="og:description" content="An independent studio making high-concept sci-fi games. Syntherion and The Third Party, both in development.">
+<meta property="og:title" content="Tozi Cabin Games — Syntherion, The Third Party, Quiet World">
+<meta property="og:description" content="An independent studio making games for phones. Three in development: Syntherion, The Third Party and Quiet World.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tozicabingames.com/">
 <meta property="og:locale" content="en_US">
@@ -28,34 +29,54 @@
 <meta property="og:image" content="https://tozicabingames.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="A ringed planet and two starships, from the game Syntherion.">
+<meta property="og:image:alt" content="The Tozi Cabin Games logo over a moonlit mountain range, above three phones showing Syntherion, The Third Party and Quiet World.">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tozicabingames.com/og-image.jpg">
 </head>
 <body>
 
-  <header class="wordmark">
+  <header class="band">
     <div class="lockup"><img src="img/tozi-mark.webp" alt="" width="84" height="84"><h1>Tozi<span>Cabin Games</span></h1></div>
   </header>
 
   <main class="panels">
 
-    <a class="panel panel--syntherion panel--has-art" href="https://syntheriongame.com">
+    <div class="panel panel--syntherion panel--has-art">
       <span class="panel__art" aria-hidden="true"></span>
+      <span class="phone" aria-hidden="true"><span class="phone__screen">
+        <video class="panel__loop" muted loop playsinline preload="none"
+          src="https://pub-e52e55062eab45daaa777a6bec1f03ca.r2.dev/syntherion/home-loop-v1.mp4"></video>
+      </span></span>
       <span class="panel__label">
         <img class="panel__title panel__title--art panel__title--syntherion" src="img/syntherion-title.webp" alt="Syntherion">
-        <span class="panel__note">Visit the site</span>
+        <span class="panel__note">In development</span>
       </span>
-    </a>
+    </div>
 
     <a class="panel panel--third-party panel--has-art" href="/thirdparty/">
       <span class="panel__art" aria-hidden="true"></span>
+      <span class="phone" aria-hidden="true"><span class="phone__screen">
+        <video class="panel__loop" muted loop playsinline preload="none"
+          src="https://pub-e52e55062eab45daaa777a6bec1f03ca.r2.dev/thirdparty/home-loop-v1.mp4"></video>
+      </span></span>
       <span class="panel__label">
         <img class="panel__title panel__title--art panel__title--third-party" src="img/the-third-party-title.webp" alt="The Third Party">
-        <span class="panel__note">Out October 27</span>
+        <span class="panel__note">In development</span>
       </span>
     </a>
+
+    <div class="panel panel--quiet-world panel--has-art">
+      <span class="panel__art" aria-hidden="true"></span>
+      <span class="phone" aria-hidden="true"><span class="phone__screen">
+        <video class="panel__loop" muted loop playsinline preload="none"
+          src="https://pub-e52e55062eab45daaa777a6bec1f03ca.r2.dev/quietworld/home-loop-v1.mp4"></video>
+      </span></span>
+      <span class="panel__label">
+        <span class="panel__title panel__title--quiet-world">Quiet World</span>
+        <span class="panel__note">In development</span>
+      </span>
+    </div>
 
   </main>
 
