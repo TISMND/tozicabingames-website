@@ -89,6 +89,8 @@ Some decisions that look arbitrary but are not:
   assimilarium-mobile (`docs/tozi-cabin-games/`).
 - **The phone's screen, not its body, is 9:19.5** (a current iPhone), so 720x1560 loops fill it exactly;
   the body is the screen plus a bezel. A 9:16 loop would sit in it with bands top and bottom.
+  Its size is plain lengths (`--phone-h` from the viewport and `--band`), **not `aspect-ratio`** against a
+  percentage height: WebKit, i.e. every iPhone browser, resolved that to a zero-width screen.
 - **Phones, not full-bleed video** [TIM 2026-10-21]: the loops are app screens and portrait play, which
   a full-bleed column crop cut up, and all three are phone games.
 - **At rest each screen shows a still**: Syntherion's ringed planet over the grid, The Third Party's key

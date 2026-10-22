@@ -22,6 +22,12 @@
   /* the phone: its bezel and corner, shared by the body and the screen inside it */
   --bezel: clamp(5px, 0.55vw, 9px);
   --corner: clamp(20px, 2.6vw, 40px);
+
+  --band: clamp(120px, 12.5vw, 200px);
+  /* The phone is sized in plain lengths, not by aspect-ratio against a percentage height: WebKit (every
+     iPhone browser) resolved that screen to zero width, a thin black line (2026-10-21). The column is the
+     screen under the band; the phone takes 74% of it. */
+  --phone-h: min(calc((100dvh - var(--band)) * 0.74), 800px);
 }
 
 /* The studio's wordmark faces, as its logo sets them (assimilarium-mobile docs/tozi-cabin-games): TOZI in
@@ -64,7 +70,7 @@ body {
 .band {
   position: relative;
   flex: none;
-  height: clamp(120px, 12.5vw, 200px);
+  height: var(--band);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,8 +182,9 @@ div.panel { cursor: default; }
 .phone {
   position: relative;
   flex: none;
-  display: flex;
-  height: min(74%, 800px);
+  /* the screen is 9:19.5, the body the screen plus its bezel */
+  height: var(--phone-h);
+  width: calc((var(--phone-h) - 2 * var(--bezel)) * 9 / 19.5 + 2 * var(--bezel));
   padding: var(--bezel);
   border-radius: var(--corner);
   background: #08080a;
@@ -205,12 +212,12 @@ div.panel { cursor: default; }
 }
 
 /* The screen, not the body, is a current iPhone's (1179 x 2556 is 9 : 19.5), so the 720 x 1560 loops fill it
-   exactly; the body is the screen plus its bezel, sized around it. */
+   exactly; the body is the screen plus its bezel, sized around it (--phone-h, above). */
 .phone__screen {
   position: relative;
   display: block;
+  width: 100%;
   height: 100%;
-  aspect-ratio: 9 / 19.5;
   overflow: hidden;
   border-radius: calc(var(--corner) - var(--bezel));
   background: #000 center / cover no-repeat;
@@ -395,14 +402,13 @@ div.panel { cursor: default; }
 @media (max-width: 700px) {
   body { height: auto; overflow: visible; }
 
-  .band { height: 116px; }
+  :root { --band: 116px; --phone-h: calc(88svh * 0.68); }
   .lockup img { width: 60px; }
   .band h1 { font-size: 2.2rem; }
 
   .panels { flex-direction: column; }
 
   .panel { flex: none; height: 88svh; }
-  .phone { height: 68%; }
 
   .panel__title--syntherion { --w: min(70vw, 340px); }
   .panel__title--third-party { width: min(48vw, 240px); }
