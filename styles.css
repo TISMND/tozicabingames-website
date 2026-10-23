@@ -144,7 +144,7 @@ body {
 }
 
 /* a game with nowhere to go yet is a div, not a link: no hand cursor, and on a phone its note is a label,
-   not a button (2026-10-21: Syntherion and Quiet World) */
+   not a button (none since 2026-10-23, when every game got its page) */
 a.panel { cursor: pointer; }
 div.panel { cursor: default; }
 

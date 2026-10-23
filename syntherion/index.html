@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Syntherion — Tozi Cabin Games</title>
+<meta name="description" content="Syntherion: every song is its own game, built around a synthwave track licensed from the artist who made it. In development for phones.">
+<link rel="canonical" href="https://tozicabingames.com/syntherion/">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0b0d">
+<link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<meta property="og:title" content="Syntherion — every song is its own game">
+<meta property="og:description" content="Every song is its own game, built around licensed synthwave. In development for phones.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tozicabingames.com/syntherion/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tozicabingames.com/img/syntherion/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A ringed planet setting behind neon mountains over a purple wireframe grid.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tozicabingames.com/img/syntherion/og.jpg">
+
+<!-- The game's public page, drafted 2026-10-23 after thirdparty/. The copy is from syntheriongame.com's pitch and
+     synth-mobile's CLAUDE.md; the screenshots are frames of the home loop (local-media/syntherion-loop.mp4). The banner is
+     the app's title screen shot wide with its lettering hidden (assets/source/syntherion-banner.png). -->
+<style>
+  @font-face { font-family: "Public Sans"; font-style: normal; font-weight: 100 900; font-display: swap;
+    src: url("/fonts/public-sans-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Bebas Neue"; font-style: normal; font-weight: 400; font-display: swap;
+    src: url("/fonts/bebas-neue-latin.woff2") format("woff2"); }
+
+  :root { --bg: #0b0b0d; --panel: #121216; --ink: #e8e8ea; --body: #c3c3c8; --dim: #7a7a82; --rule: #1f1f25;
+    --accent: #ff4fd8; --moon: #aebfce; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--body);
+    font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--ink); text-underline-offset: 3px; }
+
+  .studio { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; justify-content: center; padding: 1.1rem 1rem; }
+  .studio a { display: flex; align-items: center; gap: 0.6rem; padding: 0.35rem 0.9rem 0.35rem 0.35rem; border-radius: 999px;
+    background: rgba(11, 11, 13, 0.72); box-shadow: 0 0 0 1px rgba(174, 191, 206, 0.16); text-decoration: none; }
+  .studio img { width: 36px; height: 36px; border-radius: 50%; display: block; }
+  .studio span { font-family: "Bebas Neue", Impact, sans-serif; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--ink); line-height: 1; }
+  .studio small { font-family: "Public Sans", sans-serif; font-size: 0.55rem; font-weight: 600; letter-spacing: 0.36em; color: var(--moon); margin-left: 0.15rem; }
+
+  .hero { position: relative; }
+  .hero img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: cover; object-position: center 40%; }
+  .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30%; background: linear-gradient(transparent, var(--bg)); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 70px; }
+
+  .intro { text-align: center; margin-top: -2.5rem; position: relative; z-index: 1; }
+  .title { margin: 0 0 1.1rem; }
+  .title img { display: block; width: min(420px, 82%); height: auto; margin: 0 auto; }
+  .kicker { margin: 0; font-size: clamp(1.25rem, 3.6vw, 1.6rem); color: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+  .kicker b { color: var(--accent); font-weight: 650; }
+  .when { margin: 0.7rem 0 0; font-size: 1rem; color: var(--body); }
+
+  h2 { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); font-weight: 650; margin: 56px 0 16px; }
+  p { line-height: 1.65; margin: 0 0 14px; font-size: 1.04rem; }
+
+  .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+  .shots img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 19.5; object-fit: cover; object-position: top;
+    border: 1px solid var(--rule); border-radius: 16px; background: var(--panel); }
+  figcaption { font-size: 0.8rem; color: var(--dim); line-height: 1.4; }
+
+  ul.features { margin: 0; padding-left: 1.1em; line-height: 1.7; font-size: 1.02rem; }
+  ul.features li { margin-bottom: 6px; }
+  ul.features li::marker { color: var(--accent); }
+
+  footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--dim);
+    display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+  footer a { color: var(--body); }
+
+  @media (max-width: 640px) {
+    .shots { grid-template-columns: 1fr 1fr; }
+    .hero img { max-height: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="studio"><a href="/"><img src="/img/tozi-mark.webp" alt=""><span>Tozi<small>CABIN GAMES</small></span></a></div>
+
+  <div class="hero">
+    <img src="/img/syntherion/hero.webp" width="2400" height="980"
+      alt="A ringed planet setting behind neon mountains over a purple wireframe grid.">
+  </div>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1 class="title"><img src="/img/syntherion-title.webp" alt="Syntherion"></h1>
+      <p class="kicker">Every song is <b>its own game.</b></p>
+      <p class="when">In development for iPhone and Android.</p>
+    </section>
+
+    <h2>The game</h2>
+    <p>Syntherion is an arcade game built song by song. Every song is its own game, made around one synthwave track
+      licensed from the artist who made it.</p>
+    <p>Your guns fire on the music. The world, the enemies, the mission and even the way you play come from the song: a
+      night drive toward a ringed planet, a fight with a mech on a green grid, a freeway after dark.</p>
+    <p>Pick a song, play it, and find its artist: every song links to their Bandcamp, Spotify and Instagram.</p>
+
+    <h2>Screenshots</h2>
+    <div class="shots">
+      <figure><img src="/img/syntherion/shot-grid.webp" width="640" height="1386" loading="lazy" alt="A ship over a neon grid toward a ringed planet."><figcaption>The grid, toward the ringed planet</figcaption></figure>
+      <figure><img src="/img/syntherion/shot-songs.webp" width="640" height="1386" loading="lazy" alt="The song list: GHOST by GMNI88, with PLAY and links to the artist."><figcaption>Picking a song: GHOST, by GMNI88</figcaption></figure>
+      <figure><img src="/img/syntherion/shot-mech.webp" width="640" height="1386" loading="lazy" alt="A wireframe mech on a green grid, under fire."><figcaption>A boss, on the beat</figcaption></figure>
+      <figure><img src="/img/syntherion/shot-city.webp" width="640" height="1386" loading="lazy" alt="A car racing through a neon city."><figcaption>A neon city at street level</figcaption></figure>
+    </div>
+
+    <h2>Each game, from its song</h2>
+    <ul class="features">
+      <li><b>Environment:</b> shapes, colors and hazards fit the song's vibe.</li>
+      <li><b>Weapons:</b> each instrument and melody drives its own gun.</li>
+      <li><b>Enemies:</b> their behavior and attacks match the song's character.</li>
+      <li><b>Objectives:</b> the mission is drawn from what the song is about.</li>
+    </ul>
+
+    <h2>Synthwave artists</h2>
+    <p>Want a game built around your music? Write to <a href="mailto:tozicabingames@gmail.com">tozicabingames@gmail.com</a>.</p>
+
+    <footer>
+      <span>© 2026 <a href="/">Tozi Cabin Games</a></span>
+      <a href="mailto:tozicabingames@gmail.com">tozicabingames@gmail.com</a>
+    </footer>
+  </main>
+
+</body>
+</html>

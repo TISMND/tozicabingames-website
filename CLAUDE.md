@@ -2,9 +2,14 @@
 
 Landing page for Tozi Cabin Games. One static page, three games (since 2026-10-21): Syntherion,
 The Third Party (formerly Assimilarium) and Quiet World, all phone games, all "In development" for now.
-Only The Third Party links anywhere, to its own public page `thirdparty/` (since 2026-10-14; "App Store
-page coming soon" until the store link is live). Syntherion's link to syntheriongame.com is off while
-that site shows the old desktop game; Quiet World has no page yet. A game with no link is a `div.panel`.
+Each game links to its own public page (2026-10-23): `syntherion/`, `thirdparty/` (since 2026-10-14; "App
+Store page coming soon" until the store link is live) and `quietworld/`, all built alike: a wide banner,
+title, kicker, a few paragraphs, four phone screenshots, features. Their images are in `img/<game>/`. The
+Syntherion banner is the app's title screen shot wide with its lettering hidden (synth-mobile's workshop
+server, puppeteer at 1600x720 @1.5, `#m-title .logo, .tap` hidden); Quiet World's is the reel's night
+globe widened onto black, a stopgap because its scene engine draws portrait only (720x1280). The
+screenshots are frames of the home loops. syntheriongame.com still shows the old desktop game, so nothing
+links there. A game with no page would be a `div.panel`.
 The press kit is `thirdparty/press/`, unlisted and `noindex`; its source is the game repo's
 `docs/press/thirdparty-kit/`.
 

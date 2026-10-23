@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet World — Tozi Cabin Games</title>
+<meta name="description" content="Quiet World: a journaling app and idle game. Everyone has disappeared; start alone on your own street and walk the whole world, even with the app closed. In development for phones.">
+<link rel="canonical" href="https://tozicabingames.com/quietworld/">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0b0d">
+<link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<meta property="og:title" content="Quiet World — everyone has disappeared">
+<meta property="og:description" content="A journaling app and idle game: walk the whole world from your own street, even with the app closed, and leave notes for other players. In development for phones.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tozicabingames.com/quietworld/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tozicabingames.com/img/quiet-world/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Three phone screens from Quiet World: an empty road through pines, a note left in Santa Monica, a map of nearby places.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tozicabingames.com/img/quiet-world/og.jpg">
+
+<!-- The game's public page, drafted 2026-10-23 after thirdparty/. The copy is from quiet-world's design spec
+     (docs/specs/2026-10-19-quiet-world-design.md) and CLAUDE.md; the screenshots are frames of the home loop
+     (local-media/quiet-world-loop.mp4). The banner is the loop's night globe, widened onto black
+     (assets/source/quiet-world-banner.png): the scene engine draws portrait only. -->
+<style>
+  @font-face { font-family: "Public Sans"; font-style: normal; font-weight: 100 900; font-display: swap;
+    src: url("/fonts/public-sans-latin.woff2") format("woff2"); }
+  /* the game's title face, as on the home page */
+  @font-face { font-family: "Figtree"; font-style: normal; font-weight: 300; font-display: swap;
+    src: url("/fonts/figtree-light.ttf") format("truetype"); }
+  @font-face { font-family: "Bebas Neue"; font-style: normal; font-weight: 400; font-display: swap;
+    src: url("/fonts/bebas-neue-latin.woff2") format("woff2"); }
+
+  :root { --bg: #0b0b0d; --panel: #121216; --ink: #e8e8ea; --body: #c3c3c8; --dim: #7a7a82; --rule: #1f1f25;
+    --accent: #e8b860; --moon: #aebfce; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--body);
+    font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--ink); text-underline-offset: 3px; }
+
+  .studio { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; justify-content: center; padding: 1.1rem 1rem; }
+  .studio a { display: flex; align-items: center; gap: 0.6rem; padding: 0.35rem 0.9rem 0.35rem 0.35rem; border-radius: 999px;
+    background: rgba(11, 11, 13, 0.72); box-shadow: 0 0 0 1px rgba(174, 191, 206, 0.16); text-decoration: none; }
+  .studio img { width: 36px; height: 36px; border-radius: 50%; display: block; }
+  .studio span { font-family: "Bebas Neue", Impact, sans-serif; font-size: 1.25rem; letter-spacing: 0.12em; color: var(--ink); line-height: 1; }
+  .studio small { font-family: "Public Sans", sans-serif; font-size: 0.55rem; font-weight: 600; letter-spacing: 0.36em; color: var(--moon); margin-left: 0.15rem; }
+
+  .hero { position: relative; background: #010003; }
+  .hero img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: cover; object-position: center 45%; }
+  .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 30%; background: linear-gradient(transparent, var(--bg)); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 70px; }
+
+  .intro { text-align: center; margin-top: -2.5rem; position: relative; z-index: 1; }
+  .title { margin: 0 0 1.1rem; }
+  .title { font-family: "Figtree", system-ui, sans-serif; font-weight: 300; font-size: clamp(1.9rem, 6vw, 2.8rem);
+    letter-spacing: 0.3em; text-indent: 0.3em; text-transform: uppercase; color: var(--ink); }
+  .kicker { margin: 0; font-size: clamp(1.25rem, 3.6vw, 1.6rem); color: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+  .kicker b { color: var(--accent); font-weight: 650; }
+  .when { margin: 0.7rem 0 0; font-size: 1rem; color: var(--body); }
+
+  h2 { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); font-weight: 650; margin: 56px 0 16px; }
+  p { line-height: 1.65; margin: 0 0 14px; font-size: 1.04rem; }
+
+  .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+  .shots img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 19.5; object-fit: cover; object-position: top;
+    border: 1px solid var(--rule); border-radius: 16px; background: var(--panel); }
+  figcaption { font-size: 0.8rem; color: var(--dim); line-height: 1.4; }
+
+  ul.features { margin: 0; padding-left: 1.1em; line-height: 1.7; font-size: 1.02rem; }
+  ul.features li { margin-bottom: 6px; }
+  ul.features li::marker { color: var(--accent); }
+
+  footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--dim);
+    display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+  footer a { color: var(--body); }
+
+  @media (max-width: 640px) {
+    .shots { grid-template-columns: 1fr 1fr; }
+    .hero img { max-height: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="studio"><a href="/"><img src="/img/tozi-mark.webp" alt=""><span>Tozi<small>CABIN GAMES</small></span></a></div>
+
+  <div class="hero">
+    <img src="/img/quiet-world/hero.webp" width="2400" height="1000"
+      alt="The Earth at night from space, the Americas lit with the lights of towns.">
+  </div>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1 class="title">Quiet World</h1>
+      <p class="kicker">Everyone has <b>disappeared.</b></p>
+      <p class="when">A journaling app and idle game, in development for iPhone and Android.</p>
+    </section>
+
+    <h2>The game</h2>
+    <p>Quiet World is a journaling app and an idle game. You start alone where you really are, on your own street, and
+      from there the whole world is open: pick anywhere on Earth, a landmark or a far city, and set off on foot.</p>
+    <p>The walk goes on while the app is closed. Check in when you like and you'll be somewhere new; the app tells you
+      when you arrive. Stop at the shops along the way for food and water, and rest when you need to.</p>
+    <p>Keep a journal of the road, a page and a picture for wherever you are. And leave notes behind: every player walks
+      the same world, and anyone who passes that spot can read what you wrote. You may never meet another player. You might.</p>
+
+    <h2>Screenshots</h2>
+    <div class="shots">
+      <figure><img src="/img/quiet-world/shot-walk.webp" width="640" height="1386" loading="lazy" alt="An empty road through tall pines, snow falling."><figcaption>Walking, through the pines</figcaption></figure>
+      <figure><img src="/img/quiet-world/shot-note.webp" width="640" height="1386" loading="lazy" alt="A note being left on Ocean Avenue in Santa Monica: Hello from wherever."><figcaption>Leaving a note in Santa Monica</figcaption></figure>
+      <figure><img src="/img/quiet-world/shot-swap.webp" width="640" height="1386" loading="lazy" alt="A convenience store's shelf beside what you carry, with Food, Water and Rest bars."><figcaption>What a corner store still holds</figcaption></figure>
+      <figure><img src="/img/quiet-world/shot-map.webp" width="640" height="1386" loading="lazy" alt="A street map dotted with the places nearby."><figcaption>The places around you</figcaption></figure>
+    </div>
+
+    <h2>Features</h2>
+    <ul class="features">
+      <li>The whole world, from your own street: real roads and real places, anywhere on Earth.</li>
+      <li>An idle game: your walk carries on while the app is closed.</li>
+      <li>A journal of the road, every page with a picture of where you were.</li>
+      <li>Notes for other players, left where you stand and read by walking there.</li>
+      <li>Peaceful first: no death, no enemies. Just keep yourself fed, watered and rested.</li>
+    </ul>
+
+    <footer>
+      <span>© 2026 <a href="/">Tozi Cabin Games</a></span>
+      <a href="mailto:tozicabingames@gmail.com">tozicabingames@gmail.com</a>
+    </footer>
+  </main>
+
+</body>
+</html>
